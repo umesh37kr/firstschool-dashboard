@@ -8,9 +8,17 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 
 const Login = () => {
+  const handleLoginSubmit = () => {
+    const email = emailRef.current?.value;
+    const password = passwordRef.current?.value;
+    console.log("data:", email, password);
+  };
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
   return (
     <section className="flex items-center justify-center h-screen">
       <Card className="mx-auto max-w-sm">
@@ -25,6 +33,7 @@ const Login = () => {
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
+                ref={emailRef}
                 id="email"
                 type="email"
                 placeholder="m@example.com"
@@ -38,9 +47,13 @@ const Login = () => {
                   Forgot your password?
                 </Link>
               </div>
-              <Input id="password" type="password" required />
+              <Input ref={passwordRef} id="password" type="password" required />
             </div>
-            <Button type="submit" className="w-full">
+            <Button
+              onClick={handleLoginSubmit}
+              type="submit"
+              className="w-full"
+            >
               Login
             </Button>
           </div>

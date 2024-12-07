@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { login } from "@/http/api";
 import { useMutation } from "@tanstack/react-query";
+import { LoaderCircle } from "lucide-react";
 import { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -38,9 +39,15 @@ const Login = () => {
     <section className="flex items-center justify-center h-screen">
       <Card className="mx-auto max-w-sm">
         <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardTitle className="text-2xl text-center">Login</CardTitle>
           <CardDescription>
             Enter your email below to login to your account
+            <br />
+            {mutation.isError ? (
+              <p className="text-red-500">{mutation.error.message}</p>
+            ) : (
+              ""
+            )}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -69,6 +76,11 @@ const Login = () => {
               type="submit"
               className="w-full"
             >
+              {mutation.isPending ? (
+                <LoaderCircle className="animate-spin" />
+              ) : (
+                ""
+              )}
               Login
             </Button>
           </div>

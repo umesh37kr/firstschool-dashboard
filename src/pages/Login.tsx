@@ -13,9 +13,13 @@ import useTokenStore from "@/store";
 import { useMutation } from "@tanstack/react-query";
 import { LoaderCircle } from "lucide-react";
 import { useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const { token } = useTokenStore((state) => state);
+  if (token) {
+    return <Navigate to={"/dashboard/home"} replace />;
+  }
   const navigate = useNavigate();
   const setToken = useTokenStore((state) => state.setToken);
   const emailRef = useRef<HTMLInputElement>(null);

@@ -10,3 +10,5 @@ const api = axios.create({
 export const login = async (data: { username: string; password: string }) => {
   return api.post("/api/user/login", data);
 };
+
+export const studentList = async () => api.get("api/student");

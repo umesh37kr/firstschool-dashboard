@@ -19,8 +19,9 @@ import {
 import { studentList } from "@/http/api";
 import { Students } from "@/types";
 import { useQuery } from "@tanstack/react-query";
-import { CircleUserRound } from "lucide-react";
+import { CircleUserRound, UserPlus } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const Student = () => {
   const { isLoading, isError, data, error } = useQuery({
@@ -36,20 +37,28 @@ const Student = () => {
   const students = data?.data.students;
   return (
     <>
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink>
-              <Link to="/dashboard/home">Dashboard</Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>Student</BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
-
+      <div className="flex items-center justify-between">
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink>
+                <Link to="/dashboard/home">Dashboard</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Student</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+        <Link to={"/dashboard/new-student"}>
+          <Button variant={"outline"}>
+            {" "}
+            <UserPlus />
+            Add Student
+          </Button>
+        </Link>
+      </div>
       <Table>
         <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader>

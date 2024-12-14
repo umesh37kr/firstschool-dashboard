@@ -28,6 +28,16 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { CalendarIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
+import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
   rollNumber: z.string(),
@@ -35,24 +45,33 @@ const formSchema = z.object({
   lastName: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
-  dateOfBirth: z.string(),
+  dateOfBirth: z.date({
+    required_error: "A date of birth is required.",
+  }),
   gender: z.string(),
   classes: z.string(),
   section: z.string(),
-  address: z.string(),
+  address: z
+    .string()
+    .min(10, {
+      message: "Bio must be at least 10 characters.",
+    })
+    .max(160, {
+      message: "Bio must not be longer than 30 characters.",
+    }),
 });
 const CreateStudent = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      rollNumber: "",
-      firstName: "",
-      lastName: "",
-      dateOfBirth: "",
-      gender: "",
-      classes: "",
-      section: "",
-      address: "",
+      // rollNumber: "",
+      // firstName: "",
+      // lastName: "",
+      // dateOfBirth: "",
+      // gender: "",
+      // classes: "",
+      // section: "",
+      // address: "",
     },
   });
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -207,7 +226,71 @@ const CreateStudent = () => {
                         <SelectItem value="B">B</SelectItem>
                       </SelectContent>
                     </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
+            <div className="flex gap-16">
+              <FormField
+                control={form.control}
+                name="dateOfBirth"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Date of birth</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant={"outline"}
+                            className={cn(
+                              "w-[240px] pl-3 text-left font-normal",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value ? (
+                              format(field.value, "dd/MM/yyyy")
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          captionLayout="dropdown"
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          disabled={(date) =>
+                            date > new Date() || date < new Date("1900-01-01")
+                          }
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="grid w-1/2 gap-1.5">
+              <FormField
+                control={form.control}
+                name="address"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Address</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="enter your address"
+                        className=""
+                        {...field}
+                      />
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}

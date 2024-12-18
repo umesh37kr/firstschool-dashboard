@@ -8,6 +8,7 @@ export interface Students {
   classes: string;
   section: string;
   dateOfBirth: string;
+  mobile: number;
   address: string;
   createdAt: string;
 }

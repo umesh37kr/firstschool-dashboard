@@ -29,6 +29,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { useMutation } from "@tanstack/react-query";
+import { createStudent } from "@/http/api";
 const formSchema = z.object({
   rollNumber: z.string(),
   firstName: z.string(),
@@ -41,6 +43,7 @@ const formSchema = z.object({
   gender: z.string(),
   classes: z.string(),
   section: z.string(),
+  mobile: z.string(),
   address: z.string().min(10, {
     message: "Bio must be at least 10 characters.",
   }),
@@ -52,9 +55,10 @@ const CreateStudent = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      rollNumber: "",
+      rollNumber: undefined,
       firstName: "",
       lastName: "",
+      mobile: undefined,
       dateOfBirth: "",
       gender: "",
       classes: "",
@@ -64,7 +68,27 @@ const CreateStudent = () => {
   });
 
   const avatarRef = form.register("avatar");
+
+  const mutation = useMutation({
+    mutationFn: createStudent,
+    onSuccess: () => {
+      console.log("student created sucessfully");
+    },
+  });
   function onSubmit(values: z.infer<typeof formSchema>) {
+    const formData = new FormData();
+    formData.append("rollNumber", values.rollNumber);
+    formData.append("firstName", values.firstName);
+    formData.append("lastName", values.lastName);
+    formData.append("gender", values.gender);
+    formData.append("classes", values.classes);
+    formData.append("section", values.section);
+    formData.append("dateOfBirth", values.dateOfBirth);
+    formData.append("mobile", values.mobile);
+    formData.append("address", values.address);
+    formData.append("avatar", values.avatar[0]);
+
+    mutation.mutate(formData);
     console.log(values);
   }
   return (
@@ -231,6 +255,19 @@ const CreateStudent = () => {
                     <FormLabel>Date of birth</FormLabel>
                     <FormControl>
                       <Input placeholder="dd/mm/yyyy" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="mobile"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Mobile Number</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter Mobile nunber" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

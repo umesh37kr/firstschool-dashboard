@@ -41,29 +41,29 @@ const formSchema = z.object({
   gender: z.string(),
   classes: z.string(),
   section: z.string(),
-  address: z
-    .string()
-    .min(10, {
-      message: "Bio must be at least 10 characters.",
-    })
-    .max(160, {
-      message: "Bio must not be longer than 30 characters.",
-    }),
+  address: z.string().min(10, {
+    message: "Bio must be at least 10 characters.",
+  }),
+  avatar: z.instanceof(FileList).refine((file) => {
+    return file.length == 1;
+  }, "Profile image is required"),
 });
 const CreateStudent = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      // rollNumber: "",
-      // firstName: "",
-      // lastName: "",
-      // dateOfBirth: "",
-      // gender: "",
-      // classes: "",
-      // section: "",
-      // address: "",
+      rollNumber: "",
+      firstName: "",
+      lastName: "",
+      dateOfBirth: "",
+      gender: "",
+      classes: "",
+      section: "",
+      address: "",
     },
   });
+
+  const avatarRef = form.register("avatar");
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
   }
@@ -251,6 +251,21 @@ const CreateStudent = () => {
                         className=""
                         {...field}
                       />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="grid w-1/2 gap-1.5">
+              <FormField
+                control={form.control}
+                name="avatar"
+                render={() => (
+                  <FormItem>
+                    <FormLabel>Select Profile Image</FormLabel>
+                    <FormControl>
+                      <Input type="file" {...avatarRef} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

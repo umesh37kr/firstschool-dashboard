@@ -28,26 +28,14 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { CalendarIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { format } from "date-fns";
 import { Textarea } from "@/components/ui/textarea";
-import { DatePicker } from "@/components/ui/date-picker";
-import Student from "./Student";
-
 const formSchema = z.object({
   rollNumber: z.string(),
   firstName: z.string(),
   lastName: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
-  dateOfBirth: z.date({
+  dateOfBirth: z.string({
     required_error: "A date of birth is required.",
   }),
   gender: z.string(),
@@ -241,7 +229,9 @@ const CreateStudent = () => {
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
                     <FormLabel>Date of birth</FormLabel>
-                    <DatePicker {...field} />
+                    <FormControl>
+                      <Input placeholder="dd/mm/yyyy" {...field} />
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}

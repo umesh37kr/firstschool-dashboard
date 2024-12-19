@@ -12,3 +12,7 @@ export interface Students {
   address: string;
   createdAt: string;
 }
+
+export interface ErrorResponse {
+  message: string;
+}

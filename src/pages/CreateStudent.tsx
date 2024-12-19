@@ -17,7 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import {
   Form,
   FormControl,
@@ -29,8 +29,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createStudent } from "@/http/api";
+import { LoaderCircle } from "lucide-react";
+import { Toast, ToastAction } from "@/components/ui/toast";
+import { useToast } from "@/hooks/use-toast";
+import { AxiosError } from "axios";
+import { ErrorResponse } from "@/types";
 const formSchema = z.object({
   rollNumber: z.string(),
   firstName: z.string(),
@@ -51,7 +56,10 @@ const formSchema = z.object({
     return file.length == 1;
   }, "Profile image is required"),
 });
+
 const CreateStudent = () => {
+  const { toast } = useToast();
+  const navigate = useNavigate();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -68,11 +76,25 @@ const CreateStudent = () => {
   });
 
   const avatarRef = form.register("avatar");
-
+  const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: createStudent,
     onSuccess: () => {
       console.log("student created sucessfully");
+      queryClient.invalidateQueries({ queryKey: ["studentList"] });
+      console.log("student created sucessfully");
+      toast({
+        className: "bg-green-300",
+        description: "student created sucessfully",
+      });
+      navigate("/dashboard/students");
+    },
+    onError: (Error: AxiosError<ErrorResponse>) => {
+      console.log("error::", Error.response?.data.message);
+      toast({
+        variant: "destructive",
+        description: `Error: ${Error.response?.data.message}`,
+      });
     },
   });
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -309,7 +331,14 @@ const CreateStudent = () => {
                 )}
               />
             </div>
-            <Button type="submit">Submit</Button>
+            <Button type="submit">
+              {mutation.isPending ? (
+                <LoaderCircle className="animate-spin" />
+              ) : (
+                ""
+              )}
+              Submit
+            </Button>
           </form>
         </Form>
       </div>

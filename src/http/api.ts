@@ -26,3 +26,5 @@ export const createStudent = async (data: FormData) =>
       "Content-Type": "multipart/form-data",
     },
   });
+
+export const messageList = async () => api.get("api/contact/post-list");

@@ -16,3 +16,10 @@ export interface Students {
 export interface ErrorResponse {
   message: string;
 }
+
+export interface MessageList {
+  _id: string;
+  name: string;
+  mobile: number;
+  message: string;
+}

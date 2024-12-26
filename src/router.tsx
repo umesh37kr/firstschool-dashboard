@@ -5,6 +5,7 @@ import DashboardLayout from "./layouts/DashboardLayout";
 import Student from "./pages/Student";
 import Teacher from "./pages/Teacher";
 import CreateStudent from "./pages/CreateStudent";
+import Message from "./pages/Message";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "teacher",
         element: <Teacher />,
+      },
+      {
+        path: "message",
+        element: <Message />,
       },
     ],
   },

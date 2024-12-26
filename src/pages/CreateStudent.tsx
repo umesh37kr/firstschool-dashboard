@@ -17,7 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Form,
   FormControl,
@@ -32,7 +32,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createStudent } from "@/http/api";
 import { LoaderCircle } from "lucide-react";
-import { Toast, ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/hooks/use-toast";
 import { AxiosError } from "axios";
 import { ErrorResponse } from "@/types";

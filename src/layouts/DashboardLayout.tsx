@@ -1,4 +1,4 @@
-import { Link, Navigate, NavLink, Outlet, useNavigate } from "react-router-dom";
+import { Link, Navigate, NavLink, Outlet } from "react-router-dom";
 import {
   Bell,
   CircleUser,

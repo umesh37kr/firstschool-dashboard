@@ -28,3 +28,4 @@ export const createStudent = async (data: FormData) =>
   });
 
 export const messageList = async () => api.get("api/contact/post-list");
+export const noticeList = async () => api.get("api/notice/list");

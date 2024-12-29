@@ -23,3 +23,8 @@ export interface MessageList {
   mobile: number;
   message: string;
 }
+export interface NoticeList {
+  _id: string;
+  notice: string;
+  createdAt: string;
+}

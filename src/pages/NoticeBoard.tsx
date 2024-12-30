@@ -19,8 +19,31 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Skeleton } from "@/components/ui/skeleton";
 import { NoticeList } from "@/types";
+import * as React from "react";
+import { MoreHorizontal } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+const labels = [
+  "feature",
+  "bug",
+  "enhancement",
+  "documentation",
+  "design",
+  "question",
+  "maintenance",
+];
 
 const NoticeBoard = () => {
+  const [openRow, setOpenRow] = React.useState<string | null>(null);
   const { isLoading, isError, data, error } = useQuery({
     queryKey: ["noticeList"],
     queryFn: noticeList,
@@ -69,6 +92,31 @@ const NoticeBoard = () => {
             <TableRow key={notice._id}>
               <TableCell>{notice.notice}</TableCell>
               <TableCell>{notice.createdAt}</TableCell>
+              <TableCell>
+                <DropdownMenu
+                  open={openRow === notice._id}
+                  onOpenChange={(isOpen) =>
+                    setOpenRow(isOpen ? notice._id : null)
+                  }
+                >
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="sm">
+                      <MoreHorizontal />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-[200px]">
+                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                    <DropdownMenuGroup>
+                      <DropdownMenuItem>Edit</DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem className="text-red-600">
+                        Delete
+                      </DropdownMenuItem>
+                    </DropdownMenuGroup>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

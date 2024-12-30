@@ -32,16 +32,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-const labels = [
-  "feature",
-  "bug",
-  "enhancement",
-  "documentation",
-  "design",
-  "question",
-  "maintenance",
-];
-
 const NoticeBoard = () => {
   const [openRow, setOpenRow] = React.useState<string | null>(null);
   const { isLoading, isError, data, error } = useQuery({

@@ -19,6 +19,7 @@ import { messageList } from "@/http/api";
 import { MessageList } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Message = () => {
   const { isLoading, isError, data, error } = useQuery({
@@ -26,8 +27,17 @@ const Message = () => {
     queryFn: messageList,
     staleTime: 10000, // in Milli-seconds
   });
-
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center space-y-3">
+        <Skeleton className="h-[125px] w-[250px] rounded-xl" />
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-[250px]" />
+          <Skeleton className="h-4 w-[200px]" />
+        </div>
+      </div>
+    );
+  }
 
   if (isError) return <div>Error: {error.message}</div>;
   const messages = data?.data.data;

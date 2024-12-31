@@ -1,5 +1,5 @@
-import { noticeList } from "@/http/api";
-import { useQuery } from "@tanstack/react-query";
+import { deleteNotice, noticeList } from "@/http/api";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   Table,
   TableBody,
@@ -32,9 +32,31 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Link } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
+import { AxiosError } from "axios";
+import { ErrorResponse } from "@/types";
 
 const NoticeBoard = () => {
+  const { toast } = useToast();
   const [openRow, setOpenRow] = React.useState<string | null>(null);
+  const queryClient = useQueryClient();
+  const deleteMutation = useMutation({
+    mutationFn: deleteNotice,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["noticeList"] });
+      toast({
+        className: "bg-green-300",
+        description: "Notice deleted sucessfully",
+      });
+    },
+    onError: (Error: AxiosError<ErrorResponse>) => {
+      console.log("error::", Error.response?.data.message);
+      toast({
+        variant: "destructive",
+        description: `Error: ${Error.response?.data.message}`,
+      });
+    },
+  });
   const { isLoading, isError, data, error } = useQuery({
     queryKey: ["noticeList"],
     queryFn: noticeList,
@@ -54,7 +76,9 @@ const NoticeBoard = () => {
 
   if (isError) return <div>Error: {error.message}</div>;
   const notices = data?.data.data;
-
+  const deleteHandler = (id: string) => {
+    deleteMutation.mutate(id);
+  };
   return (
     <>
       <div>
@@ -101,7 +125,10 @@ const NoticeBoard = () => {
                       <DropdownMenuItem>Edit</DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem className="text-red-600">
+                      <DropdownMenuItem
+                        onClick={() => deleteHandler(notice._id)}
+                        className="text-red-600"
+                      >
                         Delete
                       </DropdownMenuItem>
                     </DropdownMenuGroup>

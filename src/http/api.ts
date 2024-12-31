@@ -15,10 +15,11 @@ api.interceptors.request.use((config) => {
   }
   return config;
 });
+// auth endpoints
 export const login = async (data: { username: string; password: string }) => {
   return api.post("/api/user/login", data);
 };
-
+// student endpoints
 export const studentList = async () => api.get("api/student");
 export const createStudent = async (data: FormData) =>
   api.post("api/student/register", data, {
@@ -27,5 +28,11 @@ export const createStudent = async (data: FormData) =>
     },
   });
 
+// notice endpoints
 export const messageList = async () => api.get("api/contact/post-list");
+
+// notice endpoints
 export const noticeList = async () => api.get("api/notice/list");
+export const deleteNotice = async (id: string) => {
+  api.delete(`api/notice/${id}`);
+};

@@ -31,6 +31,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Link } from "react-router-dom";
 
 const NoticeBoard = () => {
   const [openRow, setOpenRow] = React.useState<string | null>(null);
@@ -53,16 +54,15 @@ const NoticeBoard = () => {
 
   if (isError) return <div>Error: {error.message}</div>;
   const notices = data?.data.data;
-  console.log("notices:", notices);
 
   return (
     <>
       <div>
         <Breadcrumb>
           <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/dashboard/home"></BreadcrumbLink>
-            </BreadcrumbItem>
+            <BreadcrumbLink>
+              <Link to="/dashboard/home">Dashboard</Link>
+            </BreadcrumbLink>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbPage>Notice Board</BreadcrumbPage>
@@ -75,6 +75,7 @@ const NoticeBoard = () => {
         <TableHeader>
           <TableRow>
             <TableHead>Notice</TableHead>
+            <TableHead>Created At</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

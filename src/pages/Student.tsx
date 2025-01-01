@@ -100,7 +100,7 @@ const Student = () => {
                 )}
               </TableCell>
               <TableCell>{student.rollNumber}</TableCell>
-              <TableCell>{student.firstName}</TableCell>
+              <TableCell>{`${student.firstName} ${student.lastName}`}</TableCell>
               <TableCell>{student.classes}</TableCell>
               <TableCell>{student.section}</TableCell>
               <TableCell>{student.gender}</TableCell>

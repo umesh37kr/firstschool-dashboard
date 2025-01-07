@@ -20,7 +20,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { NoticeList } from "@/types";
 import * as React from "react";
-import { MoreHorizontal } from "lucide-react";
+import { MoreHorizontal, UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -58,6 +58,7 @@ import { ErrorResponse } from "@/types";
 
 const NoticeBoard = () => {
   const [open, setOpen] = React.useState(false);
+  const [openNotice, setOpenNotice] = React.useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const { toast } = useToast();
   const [openRow, setOpenRow] = React.useState<string | null>(null);
@@ -104,7 +105,7 @@ const NoticeBoard = () => {
 
   return (
     <>
-      <div>
+      <div className="flex items-center justify-between">
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbLink>
@@ -116,7 +117,51 @@ const NoticeBoard = () => {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+        <Button
+          variant={"outline"}
+          onClick={() => {
+            setOpenNotice(true);
+          }}
+        >
+          {" "}
+          <UserPlus />
+          Create Notice
+        </Button>
       </div>
+
+      {/* drawer for creating new notice */}
+      {isDesktop && (
+        <Dialog open={openNotice} onOpenChange={setOpenNotice}>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Create New Notice</DialogTitle>
+              <DialogDescription>
+                create new notice here. Click save when you're done.
+              </DialogDescription>
+            </DialogHeader>
+            <ProfileForm />
+          </DialogContent>
+        </Dialog>
+      )}
+      {!isDesktop && (
+        <Drawer open={openNotice} onOpenChange={setOpenNotice}>
+          <DrawerContent>
+            <DrawerHeader className="text-left">
+              <DrawerTitle>Create New Notice</DrawerTitle>
+              <DrawerDescription>
+                create new notice here. Click save when you're done.
+              </DrawerDescription>
+            </DrawerHeader>
+            <ProfileForm className="px-4" />
+            <DrawerFooter className="pt-2">
+              <DrawerClose asChild>
+                <Button variant="outline">Cancel</Button>
+              </DrawerClose>
+            </DrawerFooter>
+          </DrawerContent>
+        </Drawer>
+      )}
+
       {/* drawer form for editing notice */}
       {isDesktop && (
         <Dialog open={open} onOpenChange={setOpen}>

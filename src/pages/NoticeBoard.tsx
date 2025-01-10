@@ -31,7 +31,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { cn } from "@/lib/utils";
 import { useMediaQuery } from "@react-hook/media-query";
 import {
   Dialog,
@@ -49,13 +48,10 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { AxiosError } from "axios";
 import { ErrorResponse } from "@/types";
-import { Textarea } from "@/components/ui/textarea";
 import CreateNotice from "@/components/pages/notice/CreateNotice";
 
 const NoticeBoard = () => {

@@ -55,6 +55,8 @@ import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { AxiosError } from "axios";
 import { ErrorResponse } from "@/types";
+import { Textarea } from "@/components/ui/textarea";
+import CreateNotice from "@/components/pages/notice/CreateNotice";
 
 const NoticeBoard = () => {
   const [open, setOpen] = React.useState(false);
@@ -139,7 +141,7 @@ const NoticeBoard = () => {
                 create new notice here. Click save when you're done.
               </DialogDescription>
             </DialogHeader>
-            <ProfileForm />
+            <CreateNotice />
           </DialogContent>
         </Dialog>
       )}
@@ -152,7 +154,7 @@ const NoticeBoard = () => {
                 create new notice here. Click save when you're done.
               </DrawerDescription>
             </DrawerHeader>
-            <ProfileForm className="px-4" />
+            <CreateNotice className="px-4" />
             <DrawerFooter className="pt-2">
               <DrawerClose asChild>
                 <Button variant="outline">Cancel</Button>
@@ -172,7 +174,7 @@ const NoticeBoard = () => {
                 Make changes to your profile here. Click save when you're done.
               </DialogDescription>
             </DialogHeader>
-            <ProfileForm />
+            <CreateNotice />
           </DialogContent>
         </Dialog>
       )}
@@ -185,7 +187,7 @@ const NoticeBoard = () => {
                 Make changes to your profile here. Click save when you're done.
               </DrawerDescription>
             </DrawerHeader>
-            <ProfileForm className="px-4" />
+            <CreateNotice className="px-4" />
             <DrawerFooter className="pt-2">
               <DrawerClose asChild>
                 <Button variant="outline">Cancel</Button>
@@ -249,21 +251,5 @@ const NoticeBoard = () => {
     </>
   );
 };
-
-function ProfileForm({ className }: React.ComponentProps<"form">) {
-  return (
-    <form className={cn("grid items-start gap-4", className)}>
-      <div className="grid gap-2">
-        <Label htmlFor="email">Email</Label>
-        <Input type="email" id="email" defaultValue="shadcn@example.com" />
-      </div>
-      <div className="grid gap-2">
-        <Label htmlFor="username">Username</Label>
-        <Input id="username" defaultValue="@shadcn" />
-      </div>
-      <Button type="submit">Save changes</Button>
-    </form>
-  );
-}
 
 export default NoticeBoard;

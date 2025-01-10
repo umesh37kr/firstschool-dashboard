@@ -154,7 +154,7 @@ const NoticeBoard = () => {
                 create new notice here. Click save when you're done.
               </DrawerDescription>
             </DrawerHeader>
-            <CreateNotice className="px-4" />
+            <CreateNotice />
             <DrawerFooter className="pt-2">
               <DrawerClose asChild>
                 <Button variant="outline">Cancel</Button>
@@ -187,7 +187,7 @@ const NoticeBoard = () => {
                 Make changes to your profile here. Click save when you're done.
               </DrawerDescription>
             </DrawerHeader>
-            <CreateNotice className="px-4" />
+            <CreateNotice />
             <DrawerFooter className="pt-2">
               <DrawerClose asChild>
                 <Button variant="outline">Cancel</Button>

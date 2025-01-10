@@ -28,11 +28,14 @@ export const createStudent = async (data: FormData) =>
     },
   });
 
-// notice endpoints
+// contact endpoints
 export const messageList = async () => api.get("api/contact/post-list");
 
 // notice endpoints
 export const noticeList = async () => api.get("api/notice/list");
+export const createNotice = async (data: { notice: string }) => {
+  await api.post("api/notice/new", data);
+};
 export const deleteNotice = async (id: string) => {
   api.delete(`api/notice/${id}`);
 };

@@ -6,7 +6,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { Card } from "@/components/ui/card";
 import { FaUserGroup } from "react-icons/fa6";
 import {
   MdOutlineDiversity1,
@@ -15,7 +14,36 @@ import {
   MdWc,
 } from "react-icons/md";
 import { Link } from "react-router-dom";
-
+import { TrendingUp } from "lucide-react";
+import { Pie, PieChart } from "recharts";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
+const chartData = [
+  { browser: "male", visitors: 175, fill: "var(--color-chrome)" },
+  { browser: "female", visitors: 107, fill: "var(--color-firefox)" },
+];
+const chartConfig = {
+  chrome: {
+    label: "Chrome",
+    color: "hsl(var(--chart-1))",
+  },
+  firefox: {
+    label: "Firefox",
+    color: "hsl(var(--chart-3))",
+  },
+} satisfies ChartConfig;
 const HomePage = () => {
   return (
     <>
@@ -81,6 +109,42 @@ const HomePage = () => {
           </div>
         </Card>
       </div>
+      {/* pie chart for gender */}
+      <Card className="flex flex-col w-1/2">
+        <CardHeader className="items-center pb-0">
+          <CardTitle className="text-xl">Students</CardTitle>
+        </CardHeader>
+        <CardContent className="flex-1 pb-0">
+          <ChartContainer
+            config={chartConfig}
+            className="mx-auto aspect-square max-h-[250px]"
+          >
+            <PieChart>
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent hideLabel />}
+              />
+              <Pie
+                data={chartData}
+                dataKey="visitors"
+                nameKey="browser"
+                innerRadius={68}
+                outerRadius={110}
+              />
+            </PieChart>
+          </ChartContainer>
+        </CardContent>
+        <CardFooter className="flex justify-around">
+          <div>
+            <h2 className="text-gray-500 font-medium">Female Student</h2>
+            <p className="font-medium">10230</p>
+          </div>
+          <div>
+            <h2 className="text-gray-500 font-medium">Male Student</h2>
+            <p className="font-medium">1230</p>
+          </div>
+        </CardFooter>
+      </Card>
     </>
   );
 };

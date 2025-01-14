@@ -7,19 +7,12 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { FaUserGroup } from "react-icons/fa6";
-import {
-  MdOutlineDiversity1,
-  MdOutlineDiversity3,
-  MdOutlineMoney,
-  MdWc,
-} from "react-icons/md";
+import { MdOutlineDiversity1, MdOutlineMoney, MdWc } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { TrendingUp } from "lucide-react";
 import { Pie, PieChart } from "recharts";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,

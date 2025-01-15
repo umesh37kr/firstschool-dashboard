@@ -7,6 +7,7 @@ import Teacher from "./pages/Teacher";
 import CreateStudent from "./pages/CreateStudent";
 import Message from "./pages/Message";
 import NoticeBoard from "./pages/NoticeBoard";
+import Parent from "./pages/Parent";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "teacher",
         element: <Teacher />,
+      },
+      {
+        path: "parent",
+        element: <Parent />,
       },
       {
         path: "message",

@@ -24,17 +24,17 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 const chartData = [
-  { browser: "male", visitors: 175, fill: "var(--color-chrome)" },
-  { browser: "female", visitors: 107, fill: "var(--color-firefox)" },
+  { browser: "male", visitors: 175, fill: "var(--color-female)" },
+  { browser: "female", visitors: 207, fill: "var(--color-male)" },
 ];
 const chartConfig = {
-  chrome: {
-    label: "Chrome",
-    color: "hsl(var(--chart-1))",
+  female: {
+    label: "Female",
+    color: "#ffaa01",
   },
-  firefox: {
-    label: "Firefox",
-    color: "hsl(var(--chart-3))",
+  male: {
+    label: "Male",
+    color: "#417dfc",
   },
 } satisfies ChartConfig;
 const HomePage = () => {
@@ -129,11 +129,15 @@ const HomePage = () => {
         </CardContent>
         <CardFooter className="flex justify-around">
           <div>
-            <h2 className="text-gray-500 font-medium">Female Student</h2>
+            <h2 className="text-gray-500 text-sm font-medium">
+              Female Student
+            </h2>
+            <div className="h-2 w-14 mt-2 mb-2 rounded-md bg-blue-500"></div>
             <p className="font-medium">10230</p>
           </div>
           <div>
-            <h2 className="text-gray-500 font-medium">Male Student</h2>
+            <h2 className="text-gray-500 text-sm font-medium">Male Student</h2>
+            <div className="h-2 w-14 mt-2 mb-2 rounded-md bg-yellow-500"></div>
             <p className="font-medium">1230</p>
           </div>
         </CardFooter>

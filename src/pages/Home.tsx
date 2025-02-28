@@ -135,8 +135,8 @@ const HomePage = () => {
         </Card>
       </div>
       {/* pie chart for gender */}
-      <div className="flex gap-4">
-        <Card className="w-1/2">
+      <div className="flex flex-col md:flex-row gap-4">
+        <Card className="w-full md:w-1/2">
           <CardHeader>
             <CardTitle className="text-lg">Students</CardTitle>
           </CardHeader>
@@ -177,7 +177,7 @@ const HomePage = () => {
             </div>
           </CardFooter>
         </Card>
-        <Card className="w-1/2">
+        <Card className="w-full md:w-1/2">
           <CardHeader>
             <CardTitle className="text-lg">Notice Board</CardTitle>
           </CardHeader>
